@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-logo: "Orbitron", "Inter", sans-serif;
+  --animate-scan-laser: scan-laser 2s ease-in-out infinite;
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-bell-shake: bell-ring 2s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-scale-up: scale-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-spin-slow: spin 10s linear infinite;
+  --animate-progress: progress 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+  @keyframes scan-laser {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(180px); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  @keyframes bell-ring {
+    0%, 100% { transform: rotate(0); }
+    5%, 15%, 25% { transform: rotate(12deg); }
+    10%, 20%, 30% { transform: rotate(-12deg); }
+    35% { transform: rotate(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes scale-up {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @keyframes progress {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+}
+
+html, body {
+  background-color: #f5f5f4; /* Matches Tailwind bg-stone-50 */
+  overscroll-behavior-y: none;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Dark mode overrides for high-contrast usability in barn conditions */
+.dark {
+  color-scheme: dark;
+}
+.dark body, 
+.dark #app-root-container {
+  background-color: #12100e !important; /* Extra deep midnight brown-charcoal */
+  color: #f5f5f4 !important; /* text-stone-50 */
+}
+.dark header, 
+.dark #app-header {
+  background-color: #1a1715 !important;
+  border-color: #2e2a24 !important; /* border-stone-800 */
+}
+.dark .bg-white,
+.dark .bg-stone-50,
+.dark .bg-stone-100 {
+  background-color: #1c1917 !important; /* bg-stone-900 */
+  color: #f5f5f4 !important;
+}
+.dark .bg-stone-50\/50 {
+  background-color: rgba(28, 25, 23, 0.5) !important;
+}
+.dark .text-stone-950,
+.dark .text-stone-900,
+.dark .text-stone-800,
+.dark .text-stone-700,
+.dark .text-stone-750 {
+  color: #f5f5f4 !important;
+}
+.dark .text-stone-550,
+.dark .text-stone-600 {
+  color: #e7e5e4 !important; /* text-stone-200 */
+}
+.dark .text-stone-400,
+.dark .text-stone-450,
+.dark .text-stone-500 {
+  color: #a8a29e !important; /* text-stone-400 */
+}
+.dark .border-stone-100,
+.dark .border-stone-150,
+.dark .border-stone-200,
+.dark .border-stone-250,
+.dark .border-stone-300 {
+  border-color: #2e2a24 !important; /* border-stone-800 */
+}
+.dark input, 
+.dark select, 
+.dark textarea {
+  background-color: #12100e !important;
+  color: #f5f5f4 !important;
+  border-color: #2e2a24 !important;
+}
+.dark .shadow-sm, 
+.dark .shadow-2xs, 
+.dark .shadow-3xs, 
+.dark .shadow-xs, 
+.dark .shadow-md, 
+.dark .shadow-lg, 
+.dark .shadow-xl {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+/* Adjust positive and warm highlights */
+.dark .bg-teal-50 {
+  background-color: #0d4f4a !important; /* dark teal */
+  color: #ccfbf1 !important; /* teal-100 */
+}
+.dark .text-teal-800, 
+.dark .text-teal-700,
+.dark .text-teal-600 {
+  color: #2dd4bf !important; /* bright teal */
+}
+.dark .border-teal-550, 
+.dark .border-teal-200 {
+  border-color: #0d9488 !important; /* teal-600 */
+}
+
+/* Beautiful dark mode mappings for colored notification panels and badges */
+.dark .bg-emerald-50 {
+  background-color: #064e3b !important; /* dark forest green */
+  color: #ecfdf5 !important;
+}
+.dark .text-emerald-800,
+.dark .text-emerald-700 {
+  color: #34d399 !important; /* bright mint */
+}
+.dark .border-emerald-500\/15 {
+  border-color: #047857 !important;
+}
+
+.dark .bg-amber-50,
+.dark .bg-amber-50\/60,
+.dark .bg-amber-50\/30 {
+  background-color: #451a03 !important; /* dark warm amber */
+  color: #fef3c7 !important;
+}
+.dark .text-amber-800,
+.dark .text-amber-700 {
+  color: #f59e0b !important; /* warm gold */
+}
+.dark .border-amber-500\/15 {
+  border-color: #b45309 !important;
+}
+
+.dark .bg-rose-50,
+.dark .bg-rose-50\/60,
+.dark .bg-rose-50\/30,
+.dark .bg-red-50 {
+  background-color: #4c0519 !important; /* dark rose/crimson */
+  color: #ffe4e6 !important;
+}
+.dark .text-rose-800,
+.dark .text-rose-700,
+.dark .text-rose-600 {
+  color: #fca5a5 !important; /* bright coral rose */
+}
+.dark .border-rose-200,
+.dark .border-rose-100 {
+  border-color: #be123c !important;
+}
+
+.dark .bg-sky-50,
+.dark .bg-blue-50 {
+  background-color: #0c4a6e !important; /* dark sky blue */
+  color: #e0f2fe !important;
+}
+.dark .text-sky-800,
+.dark .text-sky-700 {
+  color: #38bdf8 !important; /* electric sky blue */
+}
+
+.dark .bg-pink-50,
+.dark .bg-pink-50\/10 {
+  background-color: #50072b !important; /* dark magenta */
+  color: #fdf2f8 !important;
+}
+.dark .text-pink-800,
+.dark .text-pink-700 {
+  color: #f472b6 !important; /* bright pink */
+}
+.dark .border-pink-500\/20,
+.dark .border-pink-100 {
+  border-color: #db2777 !important;
+}
+
+/* Specific elements like active modals and lists */
+.dark .bg-stone-50\/20,
+.dark .bg-stone-100\/20 {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .text-stone-300 {
+  color: #d6d3d1 !important;
+}
+.dark .text-stone-400 {
+  color: #a8a29e !important;
+}
+
+/* Custom support for small text */
+.text-xxs {
+  font-size: 0.65rem;
+}
+.text-xxxs {
+  font-size: 0.55rem;
+}
+
+/* Enhanced Dark Mode overrides for panels, dialogs, charts and input elements */
+.dark .bg-stone-100\/50,
+.dark .bg-stone-150,
+.dark .bg-stone-200\/10,
+.dark .bg-stone-200\/20,
+.dark .bg-stone-200\/30,
+.dark .bg-stone-200\/40,
+.dark .bg-stone-200\/50 {
+  background-color: #24201e !important;
+  color: #f5f5f4 !important;
+}
+
+.dark .bg-stone-100 {
+  background-color: #1c1917 !important;
+}
+
+.dark .border-stone-150,
+.dark .border-stone-200,
+.dark .border-stone-200\/50,
+.dark .border-stone-300\/50,
+.dark .border-stone-300\/20,
+.dark .border-stone-400\/20,
+.dark .border-stone-100 {
+  border-color: #57534e !important; /* Sharper border-stone-600 contrast for barn visibility */
+}
+
+.dark .text-stone-850,
+.dark .text-stone-800,
+.dark .text-stone-750,
+.dark .text-stone-700,
+.dark .text-stone-650 {
+  color: #f5f5f4 !important;
+}
+
+.dark .text-stone-500,
+.dark .text-stone-450,
+.dark .text-stone-400,
+.dark .text-stone-350 {
+  color: #d6d3d1 !important; /* Brighter stone-300 for high-contrast readability */
+}
+
+.dark .bg-stone-50\/40,
+.dark .bg-stone-50\/60,
+.dark .bg-stone-50\/80 {
+  background-color: #1a1715 !important;
+}
+
+.dark .bg-white\/80,
+.dark .bg-white\/90,
+.dark .bg-white\/95 {
+  background-color: rgba(28, 25, 23, 0.9) !important;
+}
+
+.dark .shadow-3xs,
+.dark .shadow-2xs,
+.dark .shadow-xs,
+.dark .shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Assisted Access Mode Styles */
+.assisted-access {
+  font-size: 1.15rem !important;
+  line-height: 1.65 !important;
+}
+.assisted-access h1 {
+  font-size: 2.25rem !important;
+}
+.assisted-access h2 {
+  font-size: 1.75rem !important;
+}
+.assisted-access h3 {
+  font-size: 1.4rem !important;
+}
+.assisted-access p, 
+.assisted-access span, 
+.assisted-access div, 
+.assisted-access label, 
+.assisted-access input, 
+.assisted-access button, 
+.assisted-access select,
+.assisted-access td,
+.assisted-access th {
+  font-size: 1.05rem !important;
+}
+.assisted-access button, 
+.assisted-access select, 
+.assisted-access input {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  min-height: 3rem !important;
+}
+

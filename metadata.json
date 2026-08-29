@@ -1,0 +1,6 @@
+{
+  "name": "HorseSense",
+  "description": "A comprehensive horse and herd management system, tracking shoeing, vet visits, paddock checks, crew badges, and automated recurring notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

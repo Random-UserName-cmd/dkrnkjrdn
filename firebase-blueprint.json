@@ -1,0 +1,146 @@
+{
+  "entities": {
+    "Horse": {
+      "title": "Horse",
+      "description": "Metadata for an individual horse in the herd",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "breed": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string", "enum": ["Mare", "Gelding", "Stallion"] },
+        "color": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "brandingDate": { "type": "string" },
+        "brandingDescription": { "type": "string" },
+        "brandingLocation": { "type": "string" },
+        "lastShoeingDate": { "type": "string" },
+        "shoeingIntervalWeeks": { "type": "number" },
+        "lastVetDate": { "type": "string" },
+        "lastVetNotes": { "type": "string" },
+        "nextVetDueDate": { "type": "string" },
+        "lastDewormingDate": { "type": "string" },
+        "lastDentalDate": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "gender", "createdAt"]
+    },
+    "MaintenanceLog": {
+      "title": "MaintenanceLog",
+      "description": "A record of a maintenance action taken for a specific horse",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "horseId": { "type": "string" },
+        "horseName": { "type": "string" },
+        "type": { "type": "string", "enum": ["shoeing", "branding", "vet", "deworming", "dental", "vaccination", "grooming", "other"] },
+        "date": { "type": "string" },
+        "notes": { "type": "string" },
+        "performedBy": { "type": "string" },
+        "cost": { "type": "number" },
+        "nextDueDate": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["horseId", "horseName", "type", "date", "createdAt"]
+    },
+    "RanchTask": {
+      "title": "RanchTask",
+      "description": "A public job or task to be performed on the ranch",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "assignedTo": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "completedBy": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "completionDescription": { "type": "string" }
+      },
+      "required": ["title", "description", "createdBy", "createdAt", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "A scheduled or active alert for a horse's maintenance item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "horseId": { "type": "string" },
+        "horseName": { "type": "string" },
+        "type": { "type": "string", "enum": ["shoeing_due", "vet_due", "deworming_due", "custom"] },
+        "message": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["unread", "read"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["horseId", "horseName", "type", "message", "dueDate", "status", "createdAt"]
+    },
+    "RanchWarning": {
+      "title": "RanchWarning",
+      "description": "A safety or operational hazard logged on the ranch map",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["Fence", "Hazard", "Animal", "Equipment", "Water", "Other"] },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "resolved"] },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "resolvedBy": { "type": "string" },
+        "resolvedAt": { "type": "string" }
+      },
+      "required": ["type", "title", "severity", "lat", "lng", "status", "createdBy", "createdAt"]
+    },
+    "RideLog": {
+      "title": "RideLog",
+      "description": "A workout or ride logged on a specific horse",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "horseId": { "type": "string" },
+        "horseName": { "type": "string" },
+        "riderName": { "type": "string" },
+        "date": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "intensity": { "type": "string", "enum": ["light", "medium", "hard"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["horseId", "horseName", "riderName", "date", "durationMinutes", "intensity", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/horses/{horseId}": {
+      "schema": "Horse",
+      "description": "Store individual horses details"
+    },
+    "/horses/{horseId}/logs/{logId}": {
+      "schema": "MaintenanceLog",
+      "description": "Historical logs of maintenance performed on this horse"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "System-wide pending alerts for horse maintenance due dates"
+    },
+    "/ranch_tasks/{taskId}": {
+      "schema": "RanchTask",
+      "description": "Public task list containing jobs to be performed on the ranch"
+    },
+    "/ranch_warnings/{warningId}": {
+      "schema": "RanchWarning",
+      "description": "Collection of geo-tagged safety warnings/issues on the ranch"
+    },
+    "/ride_logs/{rideId}": {
+      "schema": "RideLog",
+      "description": "Workout and ride logs for system horses"
+    }
+  }
+}
